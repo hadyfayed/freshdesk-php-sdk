@@ -1,7 +1,7 @@
 {
     "name": "hadyfayed/freshdesk-php-sdk",
     "description": "PHP SDK for the Freshdesk API (v2)",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "type": "library",
     "homepage": "https://github.com/mpclarkson/freshdesk-php-sdk",
     "keywords": ["freshdesk", "customer service", "support", "help desk", "api"],
