@@ -11,6 +11,7 @@ namespace Freshdesk\Resources;
 use Freshdesk\Resources\Traits\AllTrait;
 use Freshdesk\Resources\Traits\CreateTrait;
 use Freshdesk\Resources\Traits\DeleteTrait;
+use Freshdesk\Resources\Traits\FilterTrait;
 use Freshdesk\Resources\Traits\UpdateTrait;
 use Freshdesk\Resources\Traits\ViewTrait;
 
@@ -24,7 +25,7 @@ use Freshdesk\Resources\Traits\ViewTrait;
  */
 class Contact extends AbstractResource
 {
-    use AllTrait, CreateTrait, ViewTrait, UpdateTrait, DeleteTrait;
+    use AllTrait, CreateTrait, ViewTrait, UpdateTrait, DeleteTrait, FilterTrait;
 
     /**
      * The resource endpoint
@@ -81,10 +82,36 @@ class Contact extends AbstractResource
      * @throws \Freshdesk\Exceptions\UnsupportedAcceptHeaderException
      * @throws \Freshdesk\Exceptions\ValidationException
      */
-    public function makeAgent($id, array $query = null)
+    public function makeAgent($id, array $query = [])
     {
         $end = $id . '/make_agent';
 
-        return $this->api()->request('GET', $this->endpoint($end), null, $query);
+        return $this->api()->request('PUT', $this->endpoint($end), $query);
+    }
+
+    /**
+     * Hard delete a contact to completely remove it from the portal. Can be used for GDPR compliance.
+     *
+     * Note:
+     * 1. API requires that the contact is already soft deleted. Otherwise, send a force parameter to be true.
+     *
+     * @param int $id The agent id
+     * @param array|null $query
+     * @return array|null
+     * @throws \Freshdesk\Exceptions\AccessDeniedException
+     * @throws \Freshdesk\Exceptions\ApiException
+     * @throws \Freshdesk\Exceptions\AuthenticationException
+     * @throws \Freshdesk\Exceptions\ConflictingStateException
+     * @throws \Freshdesk\Exceptions\NotFoundException
+     * @throws \Freshdesk\Exceptions\RateLimitExceededException
+     * @throws \Freshdesk\Exceptions\UnsupportedContentTypeException
+     * @throws \Freshdesk\Exceptions\MethodNotAllowedException
+     * @throws \Freshdesk\Exceptions\UnsupportedAcceptHeaderException
+     * @throws \Freshdesk\Exceptions\ValidationException
+     */
+    public function hardDelete($id, array $query = null)
+    {
+        $end = $id . '/hard_delete';
+        return $this->api()->request('DELETE', $this->endpoint($end), null, $query);
     }
 }

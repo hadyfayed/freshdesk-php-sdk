@@ -10,6 +10,11 @@
             "name": "Matthew Clarkson",
             "email": "mpclarkson@hilenium.com",
             "homepage": "http://mpclarkson.github.io/"
+        },
+        {
+            "name": "HadyFayed",
+            "email": "hadyfayed@gmail.com",
+            "homepage": "http://hadyfayed.com"
         }
     ],
     "require": {
